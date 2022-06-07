@@ -1,18 +1,11 @@
 #include <Arduino.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BME280.h>
+#include "sensor_readings.h"
+#include "settings.h"  // Ther order is importante!
 
-void refresh_readings();  // Declare in the header so that the compiler knows about it before it is called in loop()
-
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 2   // This is valid for my devkit
-#endif
-
-#define SEALEVELPRESSURE_HPA (1013.25)
 Adafruit_BME280 bme; // I2C
 
 void setup() {
-  pinMode(LED_BUILTIN,OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
   bool status;
 
@@ -25,7 +18,7 @@ void setup() {
 }
 
 void loop() {
-  refresh_readings();
+  refresh_readings(bme); // Parsing the bme object to the function as bmt is only "global" in this file.
   delay(1000);
 }
 
