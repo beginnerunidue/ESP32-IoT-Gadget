@@ -63,10 +63,19 @@ Serial.println(" m");
 Serial.println();
   u8g2.clearBuffer();					// clear the internal memory
   //u8g2.setFont(u8g2_font_ncenB08_tr);	// choose a suitable font
-  u8g2.setFont(u8g2_font_missingplanet_tn);	// choose a suitable font
-  char counterarray[6];
-  sprintf(counterarray,"%d",counter1);
-  u8g2.drawStr(0,15,counterarray);	// write something to the internal memory
+  u8g2.setFont(u8g2_font_7x13B_tf);	// choose a suitable font
+  char counterarray[20];
+  char temperature_array[10];
+  char pressure_array[16];    
+
+  sprintf(counterarray, "%d N Sample", counter1);
+  sprintf(temperature_array, "%.2f C", bme.readTemperature());
+  sprintf(pressure_array, "%.2f Pa", bme.readPressure());
+  
+  u8g2.drawStr(0,15,counterarray);	// write counter value to the internal memory
+  // u8g2.drawStr(25,15, "Sample");
+  u8g2.drawStr(0,30,temperature_array); // write temperature value to the internal memory  
+  u8g2.drawStr(0,45,pressure_array); // write pressure value to the internal memory
   u8g2.sendBuffer();					// transfer internal memory to the display
   counter1++;
   delay(2000);
